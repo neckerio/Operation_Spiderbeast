@@ -1,23 +1,23 @@
 pipeline {
 	agent any
+
 	stages {
-		stage('Hello') {
+		stage('Build') {
 			steps {
-				sh 'echo HELLO'
-				echo "Build Number is ${currentBuild.number}"	
-			}
-			post {
-				success {
-					script {
-						current.Build.result = 'UNSTABLE'
-					}
-				}
+				echo "Building..."
 			}
 		}
-	}
-	post {
-		always {
-			echo currentBuild.currentResult
+
+		stage('Test') {
+			steps {
+				echo "Testing..."
+				}
+		}
+
+		stage('Deploy') {
+			steps {
+				echo "Deploying"
+			}
 		}
 	}
 }
