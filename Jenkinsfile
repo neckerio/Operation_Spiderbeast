@@ -9,7 +9,7 @@ pipeline {
 			post {
 				success {
 					script {
-						current.Build.result = 'SUCCESS'
+						current.Build.currentResult = 'SUCCESS'
 					}
 				}
 			}
