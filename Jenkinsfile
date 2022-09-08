@@ -17,5 +17,3 @@ pipeline {
 		}
 	}
 }
-
-# How are Input/parameters used in Jenkins files that poll an scm?
