@@ -11,7 +11,6 @@ pipeline {
 				echo "Building..."
 				sh('echo ${AWS_ACCESS_KEY}')
 				sh('echo ${AWS_SECRET_ACCESS_KEY}')
-				sh 'terraform init'
 				sh 'terraform -version'
 			}
 		}
