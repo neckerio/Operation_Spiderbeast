@@ -16,6 +16,7 @@ pipeline {
 				sh('echo ${AWS_SECRET_ACCESS_KEY}')
 				sh('terraform -version')
 				sh('terraform init')
+				sh('terraform plan')
 			}
 		}
 	}
