@@ -8,7 +8,7 @@ resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
 
   tags = {
-    Name = "vpc-main"
+    Name = "vpc_main"
   }
 }
 
@@ -62,5 +62,11 @@ resource "aws_security_group" "ingress_ssh" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+}
+
+# Create route table associations
+resource "aws_route_table_association" "public" {
+  route_table_id = aws_route_table.public_route_table.id
+  subnet_id      = aws_subnet.main.id
 }
 
