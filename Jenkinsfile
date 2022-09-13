@@ -17,6 +17,8 @@ pipeline {
 				sh('terraform -version')
 				sh('terraform init')
 				sh('terraform plan')
+				sh('terraform apply -autoapprove')
+				// sh('terraform apply -destroy -autoapprove')
 			}
 		}
 	}
