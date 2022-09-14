@@ -109,5 +109,12 @@ resource "aws_instance" "web_server" {
   subnet_id     = aws_subnet.main.id
   vpc_security_group_ids = [aws_security_group.ingress_ssh.id]
   associate_public_ip_address = true
-  tags = "RHEL_aws"
+  tags = {
+    Name      = "RHEL-8"
+    Owner     = "necker"
+    App       = "D&D"
+    Service   = "Devops"
+    CreatedBy = "necker"
+  }
+
 }
