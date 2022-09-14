@@ -83,6 +83,11 @@ data "aws_ami" "rhel_8" {
     name   = "name"
     values = ["RHEL-8.6.0*"]
   }
+
+  filter {
+    name   = "architecture"
+    values = ["x86-64"]
+  }
 }
 
 # Reference aws_ami in an output
