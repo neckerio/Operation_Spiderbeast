@@ -77,17 +77,17 @@ data "aws_region" "current" {}
 
 # Terraform Data Block - Lookup aws_ami
 data "aws_ami" "rhel_8" {
-  # most_recent = true
+  most_recent = true
 
   filter {
     name   = "name"
-    values = ["RHEL*"]
+    values = ["RHEL-8.6.0_HVM-20220503-x86_64-2-Hourly2-GP2"]
   }
 
-  filter {
-    name   = "architecture"
-    values = ["x86-64"]
-  }
+  # filter {
+  #   name   = "architecture"
+  #   values = ["x86-64"]
+  # }
 }
 
 # Reference aws_ami in an output
