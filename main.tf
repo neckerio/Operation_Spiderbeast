@@ -81,13 +81,21 @@ data "aws_ami" "rhel_8" {
 
   filter {
     name   = "name"
-    values = ["RHEL-8.6.*x86_64"]
+    values = ["RHEL-8.6.0"]
   }
 }
 
 # Reference aws_ami in an output
-
-output "aws_ami_name" {
+output "aws_ami_name_search" {
   value = data.aws_ami.rhel_8.id
 }
 
+# Reference aws_region in an output
+output "aws_region_current" {
+  value = data.aws_region.current.id
+}
+
+# Reference aws_availability_zones in an output
+output "aws_availability_zones" {
+  value = data.aws_availability_zones.available.id
+}
