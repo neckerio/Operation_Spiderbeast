@@ -77,11 +77,11 @@ data "aws_region" "current" {}
 
 # Terraform Data Block - Lookup aws_ami
 data "aws_ami" "rhel_8" {
-  most_recent = true
+  # most_recent = true
 
   filter {
     name   = "name"
-    values = ["RHEL-*"]
+    values = ["RHEL*"]
   }
 
   filter {
