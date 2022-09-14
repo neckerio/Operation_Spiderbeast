@@ -83,11 +83,6 @@ data "aws_ami" "rhel_8" {
     name   = "name"
     values = ["RHEL-8.6.0_HVM-20220503-x86_64-2-Hourly2-GP2"]
   }
-
-  # filter {
-  #   name   = "architecture"
-  #   values = ["x86-64"]
-  # }
 }
 
 # Reference aws_ami in an output
@@ -103,4 +98,16 @@ output "aws_region_current" {
 # Reference aws_availability_zones in an output
 output "aws_availability_zones" {
   value = data.aws_availability_zones.available.id
+}
+
+
+
+# Terraform Resource Block - To Build EC2 instance in Public Subnet
+resource "aws_instance" "web_server" {
+  ami           = data.aws_ami.rhel_8.id
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.main.id
+  vpc_security_group_ids = [aws_security_group.ingress_ssh.id]
+  associate_public_ip_address = true
+  tags = "RHEL_aws"
 }
