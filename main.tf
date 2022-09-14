@@ -75,3 +75,19 @@ resource "aws_route_table_association" "public" {
 data "aws_availability_zones" "available" {}
 data "aws_region" "current" {}
 
+# Terraform Data Block - Lookup aws_ami
+data "aws_ami" "rhel_8" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["RHEL-8.6.*x86_64"]
+  }
+}
+
+# Reference aws_ami in an output
+
+output "aws_ami_name" {
+  value = data.aws_ami.rhel_8.id
+}
+
