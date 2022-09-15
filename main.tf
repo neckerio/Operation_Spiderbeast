@@ -109,6 +109,14 @@ resource "aws_instance" "web_server" {
   subnet_id     = aws_subnet.main.id
   vpc_security_group_ids = [aws_security_group.ingress_ssh.id]
   associate_public_ip_address = true
+  key_name                    = aws_key_pair.generated.key_name
+
+  connection {
+    user        = "necker"
+    private_key = tls_private_key.generated.private_key_pem
+    host        = self.public_ip
+  }
+
   tags = {
     Name      = "RHEL-8"
     Owner     = "necker"
@@ -116,5 +124,33 @@ resource "aws_instance" "web_server" {
     Service   = "Devops"
     CreatedBy = "necker"
   }
+
+### WARNING:
+### The below private/public key creation is used only for quickly spinning up and destroying 
+### EC2 instances. It isn't recommended for production.
+
+# Create TLS key
+resource "tls_private_key" "rsa_4096" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+# Derive local file from TLS key
+resource "local_sensitive_file" "private_key_pem" {
+  content  = tls_private_key.rsa_4096.private_key_pem
+  filename = "AWSKey.pem"
+  file_permission = "600"
+  directory_permission = "700"
+}
+
+# Use localfile for aws key pair
+resource "aws_key_pair" "generated" {
+  key_name   = "AWSKey.pem"
+  public_key = tls_private_key.rsa_4096.public_key_openssh
+
+  # lifecycle {
+  #   ignore_changes = [key_name]
+  # }
+}
 
 }
