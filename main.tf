@@ -102,29 +102,6 @@ output "aws_availability_zones" {
 
 
 
-# Terraform Resource Block - To Build EC2 instance in Public Subnet
-resource "aws_instance" "web_server" {
-  ami           = data.aws_ami.rhel_8.id
-  instance_type = "t2.micro"
-  subnet_id     = aws_subnet.main.id
-  vpc_security_group_ids = [aws_security_group.ingress_ssh.id]
-  associate_public_ip_address = true
-  key_name                    = aws_key_pair.generated.key_name
-
-  connection {
-    user        = "necker"
-    private_key = tls_private_key.generated.private_key_pem
-    host        = self.public_ip
-  }
-
-  tags = {
-    Name      = "RHEL-8"
-    Owner     = "necker"
-    App       = "D&D"
-    Service   = "Devops"
-    CreatedBy = "necker"
-  }
-
 ### WARNING:
 ### The below private/public key creation is used only for quickly spinning up and destroying 
 ### EC2 instances. It isn't recommended for production.
@@ -152,5 +129,30 @@ resource "aws_key_pair" "generated" {
   #   ignore_changes = [key_name]
   # }
 }
+### WARNING end.
+
+
+# Terraform Resource Block - To Build EC2 instance in Public Subnet
+resource "aws_instance" "web_server" {
+  ami           = data.aws_ami.rhel_8.id
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.main.id
+  vpc_security_group_ids = [aws_security_group.ingress_ssh.id]
+  associate_public_ip_address = true
+  key_name                    = aws_key_pair.generated.key_name
+
+  connection {
+    user        = "necker"
+    private_key = tls_private_key.generated.private_key_pem
+    host        = self.public_ip
+  }
+
+  tags = {
+    Name      = "RHEL-8"
+    Owner     = "necker"
+    App       = "D&D"
+    Service   = "Devops"
+    CreatedBy = "necker"
+  }
 
 }
