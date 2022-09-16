@@ -44,6 +44,7 @@ resource "aws_route_table" "public_route_table" {
   }
 }
 
+# Create SSH security group
 resource "aws_security_group" "ingress_ssh" {
   name   = "allow_ssh"
   vpc_id = aws_vpc.main.id
@@ -63,6 +64,29 @@ resource "aws_security_group" "ingress_ssh" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+
+# Create Ping security group
+resource "aws_security_group" "ping" {
+  name        = "ping"
+  vpc_id      = aws_vpc.main.id
+  description = "ICMP for Ping Access"
+  ingress {
+    description = "Allow ICMP Traffic"
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    description = "Allow all ip and ports outbound"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 
 # Create route table associations
 resource "aws_route_table_association" "public" {
