@@ -73,8 +73,8 @@ resource "aws_security_group" "ping" {
   description = "ICMP for Ping Access"
   ingress {
     description = "Allow ICMP Traffic"
-    from_port   = -1
-    to_port     = -1
+    from_port   = 0
+    to_port     = 0
     protocol    = "icmp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -148,10 +148,6 @@ resource "local_sensitive_file" "private_key_pem" {
 resource "aws_key_pair" "generated" {
   key_name   = "AWSKey.pem"
   public_key = tls_private_key.rsa_4096.public_key_openssh
-
-  # lifecycle {
-  #   ignore_changes = [key_name]
-  # }
 }
 ### WARNING end.
 
