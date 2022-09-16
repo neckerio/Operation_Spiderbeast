@@ -73,15 +73,15 @@ resource "aws_security_group" "ping" {
   description = "ICMP for Ping Access"
   ingress {
     description = "Allow ICMP Traffic"
-    from_port   = 0
-    to_port     = 0
+    from_port   = -1
+    to_port     = -1
     protocol    = "icmp"
     cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
     description = "Allow all ip and ports outbound"
-    from_port   = 0
-    to_port     = 0
+    from_port   = -1
+    to_port     = -1
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
