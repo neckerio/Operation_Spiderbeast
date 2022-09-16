@@ -157,7 +157,7 @@ resource "aws_instance" "web_server" {
 
 }
 
-# Reference aws_ami in an output
+# Output the aws_instances ip
 output "aws_instance_public_ip" {
  value = aws_instance.web_server.public_ip
  }
