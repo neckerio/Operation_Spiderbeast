@@ -177,8 +177,40 @@ resource "aws_instance" "web_server" {
 
 }
 
+
+# Terraform Resource Block - The Clone Wars
+resource "aws_instance" "web_clone" {
+  ami           = data.aws_ami.rhel_8.id
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.main.id
+  vpc_security_group_ids = [aws_security_group.ingress_ssh.id, aws_security_group.ping.id]
+  associate_public_ip_address = true
+  key_name                    = aws_key_pair.generated.key_name
+
+  connection {
+    user        = "necker"
+    private_key = tls_private_key.generated.private_key_pem
+    host        = self.public_ip
+  }
+
+  tags = {
+    Name      = "RHEL-8-Clone"
+    Owner     = "necker"
+    App       = "D&D"
+    Service   = "Devops"
+    CreatedBy = "necker"
+  }
+
+}
+
+
 # Output the aws_instances ip
 output "aws_instance_public_ip" {
  value = aws_instance.web_server.public_ip
+ }
+
+# Output the aws_instances ip
+output "aws_instance_public_ip_clone" {
+ value = aws_instance.web_clone.public_ip
  }
 
