@@ -28,6 +28,7 @@ pipeline {
 			steps {
 				echo "Provisioning..."
 				sh('ansible --version')
+			}
 		}
 	}
 }
