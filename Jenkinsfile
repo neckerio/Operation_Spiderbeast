@@ -24,5 +24,11 @@ pipeline {
 				sh('terraform apply -destroy -auto-approve')
 			}
 		}
+
+		stage('Provision') {
+			steps {
+				echo "Provisioning..."
+				sh('ansible --version')
+		}
 	}
 }
