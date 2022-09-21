@@ -27,7 +27,6 @@ pipeline {
 		stage('Provision') {
 			steps {
 				echo "Provisioning..."
-				sh('ansible --version')
 			}
 		}
 	}
