@@ -27,6 +27,11 @@ pipeline {
 		stage('Provision') {
 			steps {
 				echo "Provisioning..."
+				sh '''
+				ansible --version
+				ansible-playbook --version
+				ansible-galaxy --version
+				'''
 			}
 		}
 	}
