@@ -2,8 +2,6 @@
 - name: testing
   hosts: localhost
   tasks:
-      - name: test existence of ansible
-        package:
-          name: ansible
-          state: present
-            
+      - name: simple echo test
+        command:
+          cmd: "echo 'DIFFERENT TEST'"
