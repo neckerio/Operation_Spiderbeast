@@ -1,0 +1,9 @@
+---
+- name: testing
+  hosts: localhost
+  tasks:
+      - name: test existence of ansible
+        package:
+          name: ansible
+          state: present
+            
