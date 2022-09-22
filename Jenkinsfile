@@ -35,6 +35,7 @@ pipeline {
 
 				ansiblePlaybook (
 					playbook: 'provision_rhel_aws.yml',
+					colorized: true
 				)
 			}
 		}
