@@ -31,8 +31,11 @@ pipeline {
 				ansible --version
 				ansible-playbook --version
 				ansible-galaxy --version
-				ansible-playbook provision_rhel_aws.yml
 				'''
+
+				ansiblePlaybook (
+					playbook: 'provision_rhel_aws.yml',
+				)
 			}
 		}
 	}
