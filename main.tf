@@ -133,7 +133,7 @@ variable "EC2_PUBKEY" {
 # Use variables for aws key pair
 resource "aws_key_pair" "generated" {
   key_name   = "EC2 Public Key"
-  public_key = var.EC2
+  public_key = var.EC2_PUBKEY
 }
 
 
