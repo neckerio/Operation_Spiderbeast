@@ -13,3 +13,7 @@
       - name: debugging from Ansible
         debug:
           msg: "The IP address is: {{ lookup('env','PUBLIC_IP') }}"
+
+      - name: debugging from Ansible, Hostvars
+        debug:
+          var: hostvars
