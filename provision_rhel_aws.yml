@@ -5,3 +5,7 @@
       - name: simple echo test
         command:
           cmd: "echo 'DIFFERENT TEST'"
+
+      - name: ping a server using ENV VARS taken from terraform
+        command:
+          cmd: "ping {{ IP_ADDR }} -c 2"

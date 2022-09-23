@@ -25,27 +25,25 @@ pipeline {
 				// sh('terraform apply -destroy -auto-approve')
 			}
 		}
+
 		stage('Provision') {
 			steps {
 				echo "Provisioning..."
-				sh '''
-				ansible --version
-				ansible-playbook --version
-				ansible-galaxy --version
-				'''
+				sh('PUBLIC_IP=$(terraform output -raw aws_instance_public_ip)')
+				sh('echo $PUBLIC_IP')
 
-				ansiblePlaybook (
-					playbook: 'provision_rhel_aws.yml',
-					colorized: true
-				)
 			}
 		}
 
 		stage('Test') {
 			steps {
 				echo "Testing..."
-				sh('PUBLIC_IP=$(terraform output -raw aws_instance_public_ip)')
-				sh('echo $PUBLIC_IP')
+
+				ansiblePlaybook (
+					playbook: 'provision_rhel_aws.yml',
+					colorized: true
+					extras: '-e IP_ADDR=$PUBLIC_IP'
+				)
 			}
 		}
 	}
