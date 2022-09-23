@@ -32,11 +32,9 @@ pipeline {
 				sh('PUBLIC_IP=$(terraform output -raw aws_instance_public_ip)')
 				sh('echo $PUBLIC_IP')
 
-				echo "Testing..."
-
 				ansiblePlaybook (
 					playbook: 'provision_rhel_aws.yml',
-					extras: '-e IP_ADDR="$(PUBLIC_IP)"',
+					extras: '-e IP_ADDR=$(PUBLIC_IP)',
 					colorized: true
 				)
 			}
