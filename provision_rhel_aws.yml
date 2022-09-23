@@ -14,6 +14,6 @@
         debug:
           msg: "The IP address is: {{ lookup('env','PUBLIC_IP') }}"
 
-      - name: debugging from Ansible, Hostvars
+      - name: debugging from Ansible, facts
         debug:
-          var: hostvars
+          var: ansible_facts
