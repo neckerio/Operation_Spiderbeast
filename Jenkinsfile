@@ -27,11 +27,14 @@ pipeline {
 		}
 
 		stage('Provision') {
+			environment {
+				PUBLIC_IP = "default"
+			}
 			steps {
 				echo "Provisioning..."
 				sh('PUBLIC_IP=$(terraform output -raw aws_instance_public_ip)')
 				sh('echo $PUBLIC_IP')
-				sh('ansible-playbook -e IP_ADDR=$PUBLIC_IP provision_rhel_aws.yml')
+				sh('ansible-playbook -e IP_ADDR=${env.PUBLIC_IP} provision_rhel_aws.yml')
 
 				// ansiblePlaybook (
 				// 	playbook: 'provision_rhel_aws.yml',
