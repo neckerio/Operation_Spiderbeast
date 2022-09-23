@@ -39,5 +39,11 @@ pipeline {
 				)
 			}
 		}
+
+		stage('Provision 2') {
+			steps {
+				sh('ansible-playbook -e IP_ADDR=$(PUBLIC_IP) provision_rhel_aws.yml
+			}
+		}
 	}
 }

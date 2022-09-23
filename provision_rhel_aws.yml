@@ -2,9 +2,13 @@
 - name: testing
   hosts: localhost
   tasks:
-      - name: simple echo test
-        command:
-          cmd: "echo 'DIFFERENT TEST'"
+      - name: debugging from Ansible, facts
+        debug:
+          var: ansible_facts
+
+      - name: debugging from Ansible, hostvars
+        debug:
+          var: hostvars
 
       - name: debugging from Shell exansion
         debug:
@@ -13,7 +17,3 @@
       - name: debugging from Ansible
         debug:
           msg: "The IP address is: {{ lookup('env','PUBLIC_IP') }}"
-
-      - name: debugging from Ansible, facts
-        debug:
-          var: ansible_facts
