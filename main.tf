@@ -125,11 +125,15 @@ output "aws_availability_zones" {
 }
 
 
+# Create variables from ENV VARS
+variable "EC2_PUBKEY" {
+  type = string
+}
 
-# Use Jenkins ENV VARS for aws key pair
+# Use variables for aws key pair
 resource "aws_key_pair" "generated" {
   key_name   = "EC2 Public Key"
-  public_key = "EC2_PUBKEY"
+  public_key = var.EC2
 }
 
 
