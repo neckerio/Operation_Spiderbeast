@@ -34,10 +34,10 @@ pipeline {
 				ansible-galaxy --version
 				'''
 
-				// ansiblePlaybook (
-				// 	playbook: 'provision_rhel_aws.yml',
-				// 	colorized: true
-				// )
+				ansiblePlaybook (
+					playbook: 'provision_rhel_aws.yml',
+					colorized: true
+				)
 			}
 		}
 	}
