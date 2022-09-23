@@ -6,6 +6,6 @@
         command:
           cmd: "echo 'DIFFERENT TEST'"
 
-      - name: ping a server using ENV VARS taken from terraform
-        command:
-          cmd: "ping {{ IP_ADDR }} -c 2"
+      - name: debugging
+        debug:
+          msg: "The IP address is: {{ IP_ADDR }}"
