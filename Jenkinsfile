@@ -21,8 +21,8 @@ pipeline {
 				sh('terraform -version')
 				sh('terraform init')
 				sh('terraform plan')
-				sh('terraform apply -auto-approve')
-				// sh('terraform apply -destroy -auto-approve')
+				// sh('terraform apply -auto-approve')
+				sh('terraform apply -destroy -auto-approve')
 			}
 		}
 
@@ -36,8 +36,6 @@ pipeline {
 			steps {
 				echo "Provisioning..."
 				sh('echo $PUBLIC_IP')
-				// sh('ansible-playbook -e IP_ADDR=${PUBLIC_IP} provision_rhel_aws.yml')
-
 				ansiblePlaybook (
 					playbook: 'provision_rhel_aws.yml',
 					extras: '-e IP_ADDR=${PUBLIC_IP}',
