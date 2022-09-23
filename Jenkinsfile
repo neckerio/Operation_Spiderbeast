@@ -41,8 +41,8 @@ pipeline {
 
 				ansiblePlaybook (
 					playbook: 'provision_rhel_aws.yml',
+					extras: '-e IP_ADDR=$PUBLIC_IP',
 					colorized: true
-					extras: '-e IP_ADDR=$PUBLIC_IP'
 				)
 			}
 		}
