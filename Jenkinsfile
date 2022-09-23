@@ -44,7 +44,7 @@ pipeline {
 		stage('Test') {
 			steps {
 				echo "Testing..."
-				sh('PUBLIC_IP=$(terraform output aws_instance_public_ip -raw)')
+				sh('PUBLIC_IP=$(terraform output -raw aws_instance_public_ip)')
 				sh('echo $PUBLIC_IP')
 			}
 		}
