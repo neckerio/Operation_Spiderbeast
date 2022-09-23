@@ -39,6 +39,12 @@ pipeline {
 					colorized: true
 				)
 			}
+
+		stage('Test')
+			steps {
+				echo "Testing..."
+				sh('terraform output')
+			}
 		}
 	}
 }
