@@ -32,11 +32,6 @@ pipeline {
 				sh('PUBLIC_IP=$(terraform output -raw aws_instance_public_ip)')
 				sh('echo $PUBLIC_IP')
 
-			}
-		}
-
-		stage('Test') {
-			steps {
 				echo "Testing..."
 
 				ansiblePlaybook (
