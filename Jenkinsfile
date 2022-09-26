@@ -22,7 +22,7 @@ pipeline {
 	stages {
 		stage('Destroy') {
 			when {
-				${CHOICE} = Destroy
+				${params.CHOICE} = Destroy
 			}
 			steps {
 				echo "Building..."
