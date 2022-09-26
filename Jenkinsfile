@@ -28,18 +28,15 @@ pipeline {
 
 		stage('Provision') {
 			environment {
-				PUBLIC_IP_NODE_1 ="""
-					${sh(
+				PUBLIC_IP_NODE_1 ="""${sh(
 					returnStdout: true,
 					script: 'terraform output -raw EC2_node_1_public_ip'
 				)}"""
-				PUBLIC_IP_NODE_2 ="""
-					${sh(
+				PUBLIC_IP_NODE_2 ="""${sh(
 					returnStdout: true,
 					script: 'terraform output -raw EC2_node_2_public_ip'
 				)}"""
-				PUBLIC_IP_NODE_3 ="""
-					${sh(
+				PUBLIC_IP_NODE_3 ="""${sh(
 					returnStdout: true,
 					script: 'terraform output -raw EC2_node_3_public_ip'
 				)}"""
