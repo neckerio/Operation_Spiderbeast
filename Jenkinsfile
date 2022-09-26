@@ -23,7 +23,6 @@ pipeline {
 			}
 		}
 	}
-}
 	// stages {
 	// 	stage('Destroy') {
 	// 		when {
