@@ -13,6 +13,7 @@ pipeline {
             steps {
                 echo "Hello, ${PERSON}, nice to meet you."
             }
+				}
 				stage('ex2') {
 					steps {
                 echo "Hello, ${PERSON}, nice to meet you."
@@ -20,4 +21,3 @@ pipeline {
 					}
         }
     }
-}
