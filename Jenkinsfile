@@ -11,18 +11,18 @@ pipeline {
 		AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
 		TF_VAR_EC2_PUBKEY = credentials('ec2-public')
 	}
-	input {
-		message "Build or Destroy(default)?"
-		ok "I made my choice."
-		parameters {
-			choice(name: 'CHOICE', choices:['Build', 'Destroy'], description: 'Choose whether to Build or Destroy')
-		}
-	}
 
 	stages {
 		stage('parameter test') {
+			input {
+				message "Build or Destroy(default)?"
+				ok "I made my choice."
+				parameters {
+					choice(name: 'CHOICE', choices:['Build', 'Destroy'], description: 'Choose whether to Build or Destroy')
+				}
+			}
 			steps {
-				echo "CHOICE: ${params.CHOICE}"
+				echo "CHOICE: ${CHOICE}"
 			}
 		}
 	}
