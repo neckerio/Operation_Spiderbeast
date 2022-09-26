@@ -40,6 +40,7 @@ pipeline {
 				sh('terraform apply -destroy -auto-approve')
 			}
 		}
+	}
 
 	stages {
 		stage('Build') {
@@ -57,6 +58,7 @@ pipeline {
 				sh('terraform apply -destroy -auto-approve')
 			}
 		}
+	}
 
 		stage('Provision') {
 			when {
@@ -86,4 +88,3 @@ pipeline {
 			}
 		}
 	}
-}
