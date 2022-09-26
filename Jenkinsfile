@@ -13,7 +13,39 @@ pipeline {
 	}
 
 	stages {
+		stage('Choice') {
+			input {
+				message "Build or Destroy(default)?"
+				ok "I made my choice."
+				parameters {
+					choice(name: 'CHOICE', choices:['Build', 'Destroy'], description: 'Choose whether to Build or Destroy')
+				}
+			}
+			}
+		}
+
+	stages {
+		stage('Destroy') {
+			when {
+				${params.CHOICE} = Destroy
+			}
+			steps {
+				echo "Building..."
+				sh('echo ${AWS_ACCESS_KEY}')
+				sh('echo ${AWS_SECRET_ACCESS_KEY}')
+				sh('terraform -version')
+				sh('terraform init')
+				sh('terraform plan')
+				// sh('terraform apply -auto-approve')
+				sh('terraform apply -destroy -auto-approve')
+			}
+		}
+
+	stages {
 		stage('Build') {
+			when {
+				${params.CHOICE} = Build
+			}
 			steps {
 				echo "Building..."
 				sh('echo ${AWS_ACCESS_KEY}')
@@ -27,6 +59,9 @@ pipeline {
 		}
 
 		stage('Provision') {
+			when {
+				${params.CHOICE} = Build
+			}
 			environment {
 				PUBLIC_IP_NODE_1 ="""${sh(
 					returnStdout: true,
