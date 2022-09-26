@@ -14,9 +14,6 @@ pipeline {
 
 	stages {
 		stage('parameter test') {
-			input {
-				message "Build or Destroy(default)?"
-				ok "I made my choice."
 				parameters {
 					choice(name: 'CHOICE', choices:['Build', 'Destroy'], description: 'Choose whether to Build or Destroy')
 				}
@@ -27,7 +24,6 @@ pipeline {
 		}
 	}
 }
-
 	// stages {
 	// 	stage('Destroy') {
 	// 		when {
