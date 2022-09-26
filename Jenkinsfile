@@ -28,17 +28,32 @@ pipeline {
 
 		stage('Provision') {
 			environment {
-				PUBLIC_IP = """${sh(
-												returnStdout: true,
-												script: 'terraform output -raw aws_instance_public_ip'
+				PUBLIC_IP_NODE_1 =
+				"""
+					${sh(
+					returnStdout: true,
+					script: 'terraform output -raw EC2_node_1_public_ip'
+				)}"""
+				PUBLIC_IP_NODE_2 =
+				"""
+					${sh(
+					returnStdout: true,
+					script: 'terraform output -raw EC2_node_2_public_ip'
+				)}"""
+				PUBLIC_IP_NODE_3 =
+				"""
+					${sh(
+					returnStdout: true,
+					script: 'terraform output -raw EC2_node_3_public_ip'
 				)}"""
 			}
 			steps {
 				echo "Provisioning..."
-				sh('echo $PUBLIC_IP')
 				ansiblePlaybook (
 					playbook: 'provision_rhel_aws.yml',
-					extras: '-e IP_ADDR=${PUBLIC_IP}',
+					extras: '-e NODE_1_IP_ADDR=${PUBLIC_IP_NODE_1}',
+					extras: '-e NODE_2_IP_ADDR=${PUBLIC_IP_NODE_2}',
+					extras: '-e NODE_3_IP_ADDR=${PUBLIC_IP_NODE_3}',
 					colorized: true
 				)
 			}
