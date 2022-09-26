@@ -137,8 +137,8 @@ resource "aws_key_pair" "generated" {
 }
 
 
-# Terraform Resource Block - To Build EC2 instance in Public Subnet
-resource "aws_instance" "web_server" {
+# EC2 Instance - node_1
+resource "aws_instance" "node_1" {
   ami           = data.aws_ami.rhel_8.id
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.main.id
@@ -155,7 +155,7 @@ resource "aws_instance" "web_server" {
   tags = {
     Name      = "RHEL-8"
     Owner     = "necker"
-    App       = "D&D"
+    App       = "Docker Swarm"
     Service   = "Devops"
     CreatedBy = "necker"
   }
@@ -163,8 +163,69 @@ resource "aws_instance" "web_server" {
 }
 
 
+# EC2 Instance - node_2
+resource "aws_instance" "node_2" {
+  ami           = data.aws_ami.rhel_8.id
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.main.id
+  vpc_security_group_ids = [aws_security_group.ingress_ssh.id, aws_security_group.ping.id]
+  associate_public_ip_address = true
+  key_name                    = aws_key_pair.generated.key_name
 
-# Output the aws_instances ip
-output "aws_instance_public_ip" {
- value = aws_instance.web_server.public_ip
+  connection {
+    user        = "necker"
+    private_key = tls_private_key.generated.private_key_pem
+    host        = self.public_ip
+  }
+
+  tags = {
+    Name      = "RHEL-8"
+    Owner     = "necker"
+    App       = "Docker Swarm"
+    Service   = "Devops"
+    CreatedBy = "necker"
+  }
+
+}
+
+
+# EC2 Instance - node_3
+resource "aws_instance" "node_3" {
+  ami           = data.aws_ami.rhel_8.id
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.main.id
+  vpc_security_group_ids = [aws_security_group.ingress_ssh.id, aws_security_group.ping.id]
+  associate_public_ip_address = true
+  key_name                    = aws_key_pair.generated.key_name
+
+  connection {
+    user        = "necker"
+    private_key = tls_private_key.generated.private_key_pem
+    host        = self.public_ip
+  }
+
+  tags = {
+    Name      = "RHEL-8"
+    Owner     = "necker"
+    App       = "Docker Swarm"
+    Service   = "Devops"
+    CreatedBy = "necker"
+  }
+
+}
+
+
+# Output node_1 public_ip
+output "EC2_node_1_public_ip" {
+ value = aws_instance.node_1.public_ip
+ }
+
+# Output node_2 public_ip
+output "EC2_node_2_public_ip" {
+ value = aws_instance.node_2.public_ip
+ }
+
+# Output node_3 public_ip
+output "EC2_node_3_public_ip" {
+ value = aws_instance.node_3.public_ip
  }
