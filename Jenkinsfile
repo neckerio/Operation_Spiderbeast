@@ -27,7 +27,7 @@ pipeline {
 	stages {
 		stage('Destroy') {
 			when {
-				${params.CHOICE} = Destroy
+				${CHOICE} = Destroy
 			}
 			steps {
 				echo "Building..."
@@ -45,7 +45,7 @@ pipeline {
 	stages {
 		stage('Build') {
 			when {
-				${params.CHOICE} = Build
+				${CHOICE} = Build
 			}
 			steps {
 				echo "Building..."
@@ -62,7 +62,7 @@ pipeline {
 
 		stage('Provision') {
 			when {
-				${params.CHOICE} = Build
+				${CHOICE} = Build
 			}
 			environment {
 				PUBLIC_IP_NODE_1 ="""${sh(
