@@ -4,7 +4,7 @@ pipeline {
         string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
     }
 		environment {
-			CHOICE = ${param.PERSON}
+			CHOICE = "${params.PERSON}"
 		}
     stages {
         stage('Example') {
