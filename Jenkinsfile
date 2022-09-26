@@ -51,9 +51,7 @@ pipeline {
 				echo "Provisioning..."
 				ansiblePlaybook (
 					playbook: 'provision_rhel_aws.yml',
-					extras: '-e NODE_1_IP_ADDR=${PUBLIC_IP_NODE_1}',
-					extras: '-e NODE_2_IP_ADDR=${PUBLIC_IP_NODE_2}',
-					extras: '-e NODE_3_IP_ADDR=${PUBLIC_IP_NODE_3}',
+					extras: '-e NODE_1_IP_ADDR=${PUBLIC_IP_NODE_1} -e NODE_2_IP_ADDR=${PUBLIC_IP_NODE_2} -e NODE_3_IP_ADDR=${PUBLIC_IP_NODE_3}',
 					colorized: true
 				)
 			}
