@@ -1,5 +1,8 @@
 pipeline {
 	agent any
+	parameters {
+		string(name: 'CREATOR', defaultValue: '', description: 'Choose whether to Build or Destroy')
+	}
 	options {
 		ansiColor('xterm')
 	}
@@ -10,23 +13,38 @@ pipeline {
 		AWS_ACCESS_KEY = credentials('aws_access_key')
 		AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
 		TF_VAR_EC2_PUBKEY = credentials('ec2-public')
+		CHOICE = "${params.CREATOR}"
 	}
 
 	stages {
-		stage('Build') {
+		stage('Destroy') {
+			when {
+				environment name: 'CHOICE', value: 'Destroy'
+			}
 			steps {
-				echo "Building..."
-				sh('echo ${AWS_ACCESS_KEY}')
-				sh('echo ${AWS_SECRET_ACCESS_KEY}')
-				sh('terraform -version')
+				echo "Destroying..."
 				sh('terraform init')
 				sh('terraform plan')
-				// sh('terraform apply -auto-approve')
 				sh('terraform apply -destroy -auto-approve')
 			}
 		}
 
+		stage('Build') {
+			when {
+				environment name: 'CHOICE', value: 'Build'
+			}
+			steps {
+				echo "Building..."
+				sh('terraform init')
+				sh('terraform plan')
+				sh('terraform apply -auto-approve')
+			}
+		}
+
 		stage('Provision') {
+			when {
+				environment name: 'CHOICE', value: 'Build'
+			}
 			environment {
 				PUBLIC_IP_NODE_1 ="""${sh(
 					returnStdout: true,
