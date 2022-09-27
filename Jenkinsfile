@@ -13,8 +13,10 @@ pipeline {
 		AWS_ACCESS_KEY = credentials('aws_access_key')
 		AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
 		TF_VAR_EC2_PUBKEY = credentials('ec2-public')
-		TF_VAR_EC2_PRIVKEY = credentials('ec2-private')
 		CHOICE = "${params.CREATOR}"
+		withCredentials([sshUserPrivateKey(credentialsId: 'ec2-private', keyFileVariable: 'privkey')]) {
+			    sh 'export TF_VAR_EC2_PRIVKEY=$privkey'
+		}
 	}
 
 	stages {
