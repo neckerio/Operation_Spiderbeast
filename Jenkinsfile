@@ -13,10 +13,8 @@ pipeline {
 		AWS_ACCESS_KEY = credentials('aws_access_key')
 		AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
 		TF_VAR_EC2_PUBKEY = credentials('ec2-public')
+		TF_VAR_EC2_PRIVKEY = credentials('ec2-private')
 		CHOICE = "${params.CREATOR}"
-		withCredentials([sshUserPrivateKey(credentialsId: 'ec2-private', keyFileVariable: 'privkey')]) {
-			    TF_VAR_EC2_PRIVKEY=$privkey
-		}
 	}
 
 	stages {
@@ -38,6 +36,7 @@ pipeline {
 			}
 			steps {
 				echo "Building..."
+				echo "${TF_VAR_EC2_PRIVKEY}"
 				sh('terraform init')
 				sh('terraform plan')
 				sh('terraform apply -auto-approve')
@@ -66,7 +65,7 @@ pipeline {
 				echo "Provisioning..."
 				ansiblePlaybook (
 					playbook: 'provision_rhel_aws.yml',
-					credentialsId: '${TF_VAR_EC2_PRIVKEY}',
+					credentialsId: "${TF_VAR_EC2_PRIVKEY}",
 					extras: '-e NODE_1_IP_ADDR=${PUBLIC_IP_NODE_1} -e NODE_2_IP_ADDR=${PUBLIC_IP_NODE_2} -e NODE_3_IP_ADDR=${PUBLIC_IP_NODE_3}',
 					colorized: true
 				)
