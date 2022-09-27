@@ -15,7 +15,7 @@ pipeline {
 		TF_VAR_EC2_PUBKEY = credentials('ec2-public')
 		CHOICE = "${params.CREATOR}"
 		withCredentials([sshUserPrivateKey(credentialsId: 'ec2-private', keyFileVariable: 'privkey')]) {
-			    sh 'export TF_VAR_EC2_PRIVKEY=$privkey'
+			    TF_VAR_EC2_PRIVKEY=$privkey
 		}
 	}
 
