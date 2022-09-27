@@ -36,7 +36,6 @@ pipeline {
 			}
 			steps {
 				echo "Building..."
-				echo "${TF_VAR_EC2_PRIVKEY}"
 				sh('terraform init')
 				sh('terraform plan')
 				sh('terraform apply -auto-approve')
@@ -65,8 +64,10 @@ pipeline {
 				echo "Provisioning..."
 				ansiblePlaybook (
 					playbook: 'provision_rhel_aws.yml',
-					credentialsId: "${TF_VAR_EC2_PRIVKEY}",
-					extras: '-e NODE_1_IP_ADDR=${PUBLIC_IP_NODE_1} -e NODE_2_IP_ADDR=${PUBLIC_IP_NODE_2} -e NODE_3_IP_ADDR=${PUBLIC_IP_NODE_3} -e secret=${TF_VAR_EC2_PRIVKEY}',
+					extras: '-e NODE_1_IP_ADDR=${PUBLIC_IP_NODE_1} -e NODE_2_IP_ADDR=${PUBLIC_IP_NODE_2} -e NODE_3_IP_ADDR=${PUBLIC_IP_NODE_3}',
+					extraVars: [
+							secret_key: [value: '${TF_VAR_EC2_PRIVKEY}', hidden: true]
+					]
 					colorized: true
 				)
 			}

@@ -27,9 +27,7 @@
           name: "{{ NODE_3_IP_ADDR }}"
 
 - name: test if ENV VAR INJECTION worked
-  hosts: localhost
+  hosts: EC2_West
   tasks:
-    - name: debugging
-      debug:
-        msg: "Key?: {{ secret }}"
-
+    - name: ping
+      ping:
