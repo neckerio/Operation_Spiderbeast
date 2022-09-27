@@ -13,6 +13,7 @@ pipeline {
 		AWS_ACCESS_KEY = credentials('aws_access_key')
 		AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
 		TF_VAR_EC2_PUBKEY = credentials('ec2-public')
+		TF_VAR_EC2_PRIVKEY = credentials('ec2-private')
 		CHOICE = "${params.CREATOR}"
 	}
 
@@ -63,7 +64,7 @@ pipeline {
 				echo "Provisioning..."
 				ansiblePlaybook (
 					playbook: 'provision_rhel_aws.yml',
-					credentialsId: '${TF_VAR_EC2_PUBKEY}',
+					credentialsId: '${TF_VAR_EC2_PRIVKEY}',
 					extras: '-e NODE_1_IP_ADDR=${PUBLIC_IP_NODE_1} -e NODE_2_IP_ADDR=${PUBLIC_IP_NODE_2} -e NODE_3_IP_ADDR=${PUBLIC_IP_NODE_3}',
 					colorized: true
 				)
