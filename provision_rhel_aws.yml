@@ -14,9 +14,17 @@
       debug:
         msg: "Node 3's IP address is: {{ NODE_3_IP_ADDR }}"
 
-- name: Configure Docker for EC2 Nodes
-  hosts: "{{ NODE_1_IP_ADDR }} {{ NODE_2_IP_ADDR }} {{ NODE_3_IP_ADDR }}"
+    - name: testing setting ENV VARS
+      shell:
+        cmd: "export ANSIBLE_INVENTORY={{ NODE_1_IP_ADDR }}"
+
+- name: test if ENV VAR INJECTION worked
+  hosts: localhost
   tasks:
-    - name: ping to test connectivity
-      ping:
+    - name: debugging, facts
+      debug:
+        var: ansible_facts
+    - name: debugging ANSIBLE_INVENTORY
+      debug:
+        msg: "{{ lookup('env', 'ANSIBLE_INVENTORY') }}"
 
