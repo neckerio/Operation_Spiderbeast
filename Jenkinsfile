@@ -15,9 +15,7 @@ pipeline {
         }
 				stage('Example 2 - conditional = Build') {
 					when {
-						environment 
-						name: 'CHOICE',
-						value: 'Build'
+						environment name: 'CHOICE', value: 'Build'
 					}
             steps {
                 echo "Hello ${params.PERSON}"
