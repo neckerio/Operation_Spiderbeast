@@ -14,6 +14,9 @@
       debug:
         msg: "Node 3's IP address is: {{ NODE_3_IP_ADDR }}"
 
-    # - name: debugging from Ansible
-    #   debug:
-    #     msg: "The IP address is: {{ lookup('env','PUBLIC_IP') }}"
+- name: Configure Docker for EC2 Nodes
+  hosts: "{{ NODE_1_IP_ADDR }} {{ NODE_2_IP_ADDR }} {{ NODE_3_IP_ADDR }}"
+  tasks:
+    - name: ping to test connectivity
+      ping:
+
