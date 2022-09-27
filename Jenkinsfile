@@ -1,15 +1,15 @@
 pipeline {
     agent any
     parameters {
-        string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+				choice(name: 'CREATOR', choices: ['Build', 'Destroy'], description: 'Pick something')
     }
 		environment {
-			CHOICE = "${params.PERSON}"
+			CHOICE = "${params.CREATOR}"
 		}
     stages {
         stage('Example') {
             steps {
-                echo "Hello ${params.PERSON}"
+                echo "Hello ${params.CREATOR}"
 								echo "ENV VAR: $CHOICE"
             }
         }
@@ -18,7 +18,7 @@ pipeline {
 						environment name: 'CHOICE', value: 'Build'
 					}
             steps {
-                echo "Hello ${params.PERSON}"
+                echo "Hello ${params.CREATOR}"
 								echo "ENV VAR: $CHOICE"
             }
 				}
