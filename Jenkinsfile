@@ -65,10 +65,10 @@ pipeline {
 				ansiblePlaybook (
 					playbook: 'provision_rhel_aws.yml',
 					extras: '-e NODE_1_IP_ADDR=${PUBLIC_IP_NODE_1} -e NODE_2_IP_ADDR=${PUBLIC_IP_NODE_2} -e NODE_3_IP_ADDR=${PUBLIC_IP_NODE_3}',
+					colorized: true
 					extraVars: [
 							secret_key: [value: '${TF_VAR_EC2_PRIVKEY}', hidden: true]
 					]
-					colorized: true
 				)
 			}
 		}
