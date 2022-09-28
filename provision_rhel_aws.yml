@@ -52,15 +52,19 @@
     - name: Install necessary DNF tool
       dnf:
         state: present
-        name: dnf-utils
+        name:
+          - dnf-utils
+          - vim
 
     - name: Add Repository to Yum repositories
       yum_repository:
-        baseurl: "https://download.docker.com/linux/centos/docker-ce.repo"
+        baseurl: "https://download.docker.com/linux/centos/$releasever/$basearch/stable"
         description: "Docker Repo"
         enabled: True
         file: "docker-ce"
         name: "Docker"
+        gpgcheck: True
+        gpgkey: "https://download.docker.com/linux/centos/gpg"
         state: present
 
 - name: Install the latest version of Docker Engine, Containerd and Docker Compose
