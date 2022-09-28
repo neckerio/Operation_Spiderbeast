@@ -56,7 +56,7 @@
 
     - name: Add Repository to Yum repositories
       yum_repository:
-        base_url: "https://download.docker.com/linux/centos/docker-ce.repo"
+        baseurl: "https://download.docker.com/linux/centos/docker-ce.repo"
         description: "Docker Repo"
         enabled: True
         file: "docker-ce"
