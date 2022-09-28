@@ -13,7 +13,7 @@ pipeline {
 		AWS_ACCESS_KEY = credentials('aws_access_key')
 		AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
 		TF_VAR_EC2_PUBKEY = credentials('ec2-public')
-		TF_VAR_EC2_PRIVKEY = credentials('ec2-private')
+		TF_VAR_EC2_PRIVKEY = credentials('ec2-priv-text')
 		CHOICE = "${params.CREATOR}"
 	}
 
