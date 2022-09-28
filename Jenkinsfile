@@ -1,7 +1,7 @@
 pipeline {
 	agent any
 	parameters {
-		string(name: 'CREATOR', defaultValue: '', description: 'Choose whether to Build or Destroy')
+		string(name: 'CREATOR', defaultValue: '', description: 'Choose whether to "Build" or "Destroy"')
 	}
 	options {
 		ansiColor('xterm')
@@ -58,20 +58,32 @@ pipeline {
 					returnStdout: true,
 					script: 'terraform output -raw EC2_node_1_public_ip'
 				)}"""
+				PRIV_IP_NODE_1 ="""${sh(
+					returnStdout: true,
+					script: 'terraform output -raw EC2_node_1_private_ip'
+				)}"""
 				PUBLIC_IP_NODE_2 ="""${sh(
 					returnStdout: true,
 					script: 'terraform output -raw EC2_node_2_public_ip'
 				)}"""
+				PRIV_IP_NODE_2 ="""${sh(
+					returnStdout: true,
+					script: 'terraform output -raw EC2_node_2_private_ip'
+				)}"""
 				PUBLIC_IP_NODE_3 ="""${sh(
 					returnStdout: true,
 					script: 'terraform output -raw EC2_node_3_public_ip'
+				)}"""
+				PRIV_IP_NODE_3 ="""${sh(
+					returnStdout: true,
+					script: 'terraform output -raw EC2_node_3_private_ip'
 				)}"""
 			}
 			steps {
 				echo "Provisioning..."
 				ansiblePlaybook (
 					playbook: 'provision_rhel_aws.yml',
-					extras: '-e NODE_1_IP_ADDR=${PUBLIC_IP_NODE_1} -e NODE_2_IP_ADDR=${PUBLIC_IP_NODE_2} -e NODE_3_IP_ADDR=${PUBLIC_IP_NODE_3}',
+					extras: '-e NODE_1_IP_ADDR=${PUBLIC_IP_NODE_1} -e NODE_1_IP_ADDR_PRIV=${PRIV_IP_NODE_1} -e NODE_2_IP_ADDR=${PUBLIC_IP_NODE_2} -e NODE_2_IP_ADDR_PRIV=${PRIV_IP_NODE_2} -e NODE_3_IP_ADDR=${PUBLIC_IP_NODE_3} -e NODE_3_IP_ADDR_PRIV=${PRIV_IP_NODE_3}',
 					colorized: true,
 					credentialsId: 'ec2-private'
 				)
