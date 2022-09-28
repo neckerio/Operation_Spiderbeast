@@ -119,7 +119,7 @@
         create: True
         owner: ec2-user
         group: ec2-user
-        marker: ' " {mark} ANSIBLE MANAGED BLOCK"'
+        marker: '" {mark} ANSIBLE MANAGED BLOCK'
         block: |
          set nocompatible
          set incsearch
