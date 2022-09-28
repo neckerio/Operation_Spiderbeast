@@ -14,6 +14,7 @@ pipeline {
 		AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
 		TF_VAR_EC2_PUBKEY = credentials('ec2-public')
 		TF_VAR_EC2_PRIVKEY = credentials('ec2-priv-text')
+		ANSIBLE_HOST_KEY_CHECKING = 'False'
 		CHOICE = "${params.CREATOR}"
 	}
 
