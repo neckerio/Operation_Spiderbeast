@@ -56,6 +56,7 @@
           - dnf-utils
           - vim
           - bash-completion
+          - git
 
     - name: Add Repository to Yum repositories
       yum_repository:
@@ -118,6 +119,7 @@
         create: True
         owner: ec2-user
         group: ec2-user
+        marker: ' " {mark} ANSIBLE MANAGED BLOCK"'
         block: |
          set nocompatible
          set incsearch
@@ -152,6 +154,6 @@
         path: /etc/hosts
         state: present
       loop:
-        - "{{ NODE_1_IP_ADDR }} node1"
-        - "{{ NODE_2_IP_ADDR }} node2"
-        - "{{ NODE_3_IP_ADDR }} node3"
+        - "{{ NODE_1_IP_ADDR_PRIV }} node1"
+        - "{{ NODE_2_IP_ADDR_PRIV }} node2"
+        - "{{ NODE_3_IP_ADDR_PRIV }} node3"
