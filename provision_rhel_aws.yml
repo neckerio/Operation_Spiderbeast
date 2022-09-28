@@ -49,12 +49,13 @@
           - docker-logrotate
           - docker-engine
 
-    - name: Install necessary DNF tool
+    - name: Install necessary tools
       dnf:
         state: present
         name:
           - dnf-utils
           - vim
+          - bash-completion
 
     - name: Add Repository to Yum repositories
       yum_repository:
