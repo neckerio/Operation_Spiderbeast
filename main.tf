@@ -220,12 +220,27 @@ output "EC2_node_1_public_ip" {
  value = aws_instance.node_1.public_ip
  }
 
+# Output node_1 private_ip
+output "EC2_node_1_private_ip" {
+ value = aws_instance.node_1.private_ip
+ }
+
 # Output node_2 public_ip
 output "EC2_node_2_public_ip" {
  value = aws_instance.node_2.public_ip
  }
 
+# Output node_2 private_ip
+output "EC2_node_2_private_ip" {
+ value = aws_instance.node_2.private_ip
+ }
+
 # Output node_3 public_ip
 output "EC2_node_3_public_ip" {
  value = aws_instance.node_3.public_ip
+ }
+
+# Output node_3 private_ip
+output "EC2_node_3_private_ip" {
+ value = aws_instance.node_3.private_ip
  }
