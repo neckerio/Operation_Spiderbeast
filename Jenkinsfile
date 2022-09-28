@@ -13,8 +13,15 @@ pipeline {
 		AWS_ACCESS_KEY = credentials('aws_access_key')
 		AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
 		TF_VAR_EC2_PUBKEY = credentials('ec2-public')
-		ANSIBLE_HOST_KEY_CHECKING = 'False'
 		CHOICE = "${params.CREATOR}"
+
+		ANSIBLE_HOST_KEY_CHECKING = 'False'
+		ANSIBLE_ASK_PASS = 'False'
+		ANSIBLE_STDOUT_CALLBACK = 'yaml'
+		ANSIBLE_BECOME = 'True'
+		ANSIBLE_BECOME_ASK_PASS	= 'False'
+		ANSIBLE_BECOME_METHOD = 'sudo'
+		ANSIBLE_BECOME_USER = 'root'
 	}
 
 	stages {
