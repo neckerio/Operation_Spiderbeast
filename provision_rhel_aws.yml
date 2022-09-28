@@ -14,7 +14,7 @@
       debug:
         msg: "Node 3's IP address is: {{ NODE_3_IP_ADDR }}"
 
-    - name: using newly discovered add_host
+    - name: Use ENV VARS to add hosts to inventory
       add_host:
         groups: "{{ item.groups }}"
         name: "{{ item.name }}"
@@ -26,8 +26,126 @@
         - groups: EC2_West
           name: "{{ NODE_3_IP_ADDR }}"
 
-- name: test if ENV VAR INJECTION worked
+- name: Test if hosts are responsive
   hosts: EC2_West
   tasks:
     - name: ping
       ping:
+
+- name: Set up Docker Repository
+  hosts: EC2_West
+  tasks:
+    - name: Remove any vestigial docker binaries from the premade image
+      dnf:
+        state: absent
+        name:
+          - docker
+          - docker-client
+          - docker-client-latest
+          - docker-common
+          - docker-latest
+          - docker-latest-logrotate
+          - docker-logrotate
+          - docker-engine
+
+    - name: Install necessary DNF tool
+      dnf:
+        state: present
+        name: dnf-utils
+
+    - name: Add Repository to Yum repositories
+      yum_repository:
+        base_url: "https://download.docker.com/linux/centos/docker-ce.repo"
+        description: "Docker Repo"
+        enabled: True
+        file: "docker-ce"
+        name: "Docker"
+        state: present
+
+- name: Install the latest version of Docker Engine, Containerd and Docker Compose
+  hosts: EC2_West
+  tasks:
+    - name: Dnf install
+      dnf:
+        state: present
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-compose-plugin
+
+- name: Linux postinstall instructions
+  hosts: EC2_West
+  tasks:
+    - name: Usermod, add EC2 user to Docker group
+      user:
+        append: True
+        groups: "docker"
+        name: "ec2-user"
+        state: present
+
+    - name: Systemctl, enable docker service to start on boot
+      service:
+        enabled: True
+        state: restarted
+        name: "{{ item }}"
+      loop:
+        - docker
+        - containerd
+
+- name: Basic user functionality
+  hosts: EC2_West
+  tasks:
+    - name: Add lines into .bashrc
+      lineinfile:
+        line: "set -o vi"
+        path: /home/ec2-user/.bashrc
+        state: present
+        create: True
+        owner: ec2-user
+        group: ec2-user
+      
+    - name: Add lines in bulk into .vimrc
+      blockinfile:
+        path: /home/ec2-user/.vimrc
+        state: present
+        create: True
+        owner: ec2-user
+        group: ec2-user
+        block: |
+         set nocompatible
+         set incsearch
+         set autoindent smartindent
+         set hidden
+         set ignorecase smartcase
+         syntax enable
+         set scrolloff=8
+         set noswapfile
+         set backupdir=~/.vim/backupdir
+         set undofile
+         set undodir=~/.vim/undodir
+         set updatetime=50
+         set timeoutlen=1000 ttimeoutlen=0
+         filetype plugin on
+         autocmd Filetype yaml setlocal ai ts=2 sw=2 et
+         set number relativenumber
+
+    - name: add necessary undo/backup dirs to enable functioning vim
+      file:
+        state: directory
+        path: "{{ item }}"
+        owner: ec2-user
+        group: ec2-user
+      loop:
+        - "/home/ec2-user/.vim/undodir"
+        - "/home/ec2-user/.vim/backupdir"
+
+    - name: Add other members of group to /etc/hosts (NOTE - switch to private vpc addresses?)
+      lineinfile:
+        line: "{{ item }}"
+        path: /etc/hosts
+        state: present
+      loop:
+        - "{{ NODE_1_IP_ADDR }} node1"
+        - "{{ NODE_2_IP_ADDR }} node2"
+        - "{{ NODE_3_IP_ADDR }} node3"
