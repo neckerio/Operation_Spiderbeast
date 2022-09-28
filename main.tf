@@ -6,6 +6,8 @@ provider "aws" {
 # Create a VPC
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
+  enable_dns_support = true
+  enable_dns_hostnames = true
 
   tags = {
     Name = "vpc_main"
@@ -17,6 +19,7 @@ resource "aws_subnet" "main" {
   vpc_id     = aws_vpc.main.id
   cidr_block = "10.0.1.0/24"
   map_public_ip_on_launch = true
+  private_dns_hostname_type_on_launch = resource-name
 
   tags = {
     Name = "pub_subnet_main"
@@ -121,7 +124,7 @@ output "aws_region_current" {
 
 # Reference aws_availability_zones in an output
 output "aws_availability_zones" {
-  value = data.aws_availability_zones.available.id
+  value = data.aws_availability_zones.available.all_availability_zones
 }
 
 
