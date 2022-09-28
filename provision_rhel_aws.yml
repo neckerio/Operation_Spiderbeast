@@ -1,6 +1,7 @@
 ---
 - name: testing
   hosts: localhost
+  become: False
   tasks:
     - name: debugging, node_1
       debug:
