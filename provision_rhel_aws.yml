@@ -159,23 +159,22 @@
         - "{{ NODE_2_IP_ADDR_PRIV }} node2"
         - "{{ NODE_3_IP_ADDR_PRIV }} node3"
 
-    - name: Change the EC2 instance hostname for Node 1
+    - name: Change the EC2 instance hostnames - Part 1
       hostname:
-        name: debug
+        name: "{{ inventory_hostname }}"
         use: systemd
-      when: inventory_hostname | int == NODE_1_IP_ADDR | int
-      register: filter
 
-    - name: debug, testing loop
-      command:
-        cmd: "echo {{ item }}"
-      when: inventory_hostname == item
-      loop: [ "{{ NODE_1_IP_ADDR }}", "{{ NODE_2_IP_ADDR }}", "{{ NODE_3_IP_ADDR }}" ]
-      register: loop
+    - name: Change the EC2 instance hostnames - Part 2
+      replace:
+        replace: "{{ item.replace }}"
+        regexp: "{{ item.regexp }}"
+        path: /etc/hostname
+        state: present
+      loop:
+        - regexp: "{{ NODE_1_IP_ADDR_PRIV }}"
+          replace: "node1"
+        - regexp: "{{ NODE_2_IP_ADDR_PRIV }}"
+          replace: "node2"
+        - regexp: "{{ NODE_3_IP_ADDR_PRIV }}"
+          replace: "node3"
 
-    - name: debugging filter
-      debug:
-        var: filter
-    - name: debugging loop
-      debug:
-        var: loop
