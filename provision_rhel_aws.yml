@@ -163,12 +163,13 @@
       hostname:
         name: debug
         use: systemd
-      when: inventory_hostname is string
+      when: inventory_hostname | int == NODE_1_IP_ADDR | int
 
-    - name: debug, = number
+    - name: debug, testing loop
       command:
-        cmd: "echo 'it is an number'"
-      when: NODE_1_IP_ADDR is number
+        cmd: "echo {{ item }}"
+      when: inventory_hostname == item
+      loop: [ "{{ NODE_1_ID_ADDR }}", "{{ NODE_2_IP_ADDR }}", "{{ NODE_3_IP_ADDR }}" ]
 
     - name: debug, = string
       command:
