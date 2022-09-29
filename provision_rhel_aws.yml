@@ -161,19 +161,19 @@
 
     - name: Change the EC2 instance hostname for Node 1
       hostname:
-        name: node1
+        name: debug
         use: systemd
-      when: inventory_hostname == "{{ NODE_1_IP_ADDR_PRIV }}"
+      when: inventory_hostname is string
 
     - name: debug, = number
       command:
         cmd: "echo 'it is an number'"
-      when: inventory_hostname is number
+      when: NODE_1_IP_ADDR is number
 
     - name: debug, = string
       command:
         cmd: "echo 'it is a sting'"
-      when: inventory_hostname is string
+      when: NODE_1_IP_ADDR is string
 
     - name: debugging actual magic var
       debug:
