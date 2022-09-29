@@ -169,12 +169,11 @@
         replace: "{{ item.replace }}"
         regexp: "{{ item.regexp }}"
         path: /etc/hostname
-        state: present
       loop:
-        - regexp: "{{ NODE_1_IP_ADDR_PRIV }}"
+        - regexp: "{{ NODE_1_IP_ADDR }}"
           replace: "node1"
-        - regexp: "{{ NODE_2_IP_ADDR_PRIV }}"
+        - regexp: "{{ NODE_2_IP_ADDR }}"
           replace: "node2"
-        - regexp: "{{ NODE_3_IP_ADDR_PRIV }}"
+        - regexp: "{{ NODE_3_IP_ADDR }}"
           replace: "node3"
 
