@@ -178,3 +178,7 @@
     - name: debugging actual magic var
       debug:
         var: inventory_hostname
+
+    - name: debugging ENV VAR
+      debug:
+        var: NODE_1_IP_ADDR
