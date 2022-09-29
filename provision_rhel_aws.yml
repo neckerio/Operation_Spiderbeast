@@ -182,13 +182,27 @@
         cmd: "grep node /etc/hostname | xargs sudo hostname"
       register: janky
 
-    - name: debbuging janky, preemptively
-      debug:
-        var: janky
-
     - name: Change the EC2 instance hostnames - Part 4
       service:
         name: NetworkManager
         state: restarted
 
+- name: Create Docker Swarm cluster
+  hosts: EC2_West
+  tasks:
+    - name: Docker Swarm Init
+      community.docker.docker_swarm:
+        name: EC2_West
+        state: present
 
+    - name: debug hostvars
+      debug:
+        var: hostvars
+
+    - name: Retrieve Swarm info
+      community.docker.docker_swarm_info:
+      register: swarm
+
+    - name: debug swarm
+      debug:
+        var: swarm
