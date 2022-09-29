@@ -163,16 +163,18 @@
       hostname:
         name: node1
         use: systemd
-      when: inventory_hostname == "NODE_1_IP_ADDR_PRIV"
+      when: inventory_hostname == "{{ NODE_1_IP_ADDR_PRIV }}"
 
-    - name: Change the EC2 instance hostname for Node 2
-      hostname:
-        name: node2
-        use: systemd
-      when: inventory_hostname == "NODE_2_IP_ADDR_PRIV"
+    - name: debug, = number
+      command:
+        cmd: "echo 'it is an number'"
+      when: inventory_hostname is number
 
-    - name: Change the EC2 instance hostname for Node 3
-      hostname:
-        name: node3
-        use: systemd
-      when: inventory_hostname == "NODE_3_IP_ADDR_PRIV"
+    - name: debug, = string
+      command:
+        cmd: "echo 'it is a sting'"
+      when: inventory_hostname is string
+
+    - name: debugging actual magic var
+      debug:
+        var: inventory_hostname
