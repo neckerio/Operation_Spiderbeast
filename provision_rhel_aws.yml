@@ -33,17 +33,6 @@
     - name: ping
       ping:
 
-    - name: debugging ansible_facts
-      debug:
-        var: ansible_facts
-    - name: debugging hostvars
-      debug:
-        var: hostvars
-
-    - name: Change the EC2 instance hostnames
-      hostname:
-        name: test
-        use: systemd
 
 - name: Set up Docker Repository
   hosts: EC2_West
@@ -169,3 +158,21 @@
         - "{{ NODE_1_IP_ADDR_PRIV }} node1"
         - "{{ NODE_2_IP_ADDR_PRIV }} node2"
         - "{{ NODE_3_IP_ADDR_PRIV }} node3"
+
+    - name: Change the EC2 instance hostname for Node 1
+      hostname:
+        name: node1
+        use: systemd
+      when: inventory_hostname == NODE_1_IP_ADDR_PRIV
+
+    - name: Change the EC2 instance hostname for Node 2
+      hostname:
+        name: node2
+        use: systemd
+      when: inventory_hostname == NODE_2_IP_ADDR_PRIV
+
+    - name: Change the EC2 instance hostname for Node 3
+      hostname:
+        name: node3
+        use: systemd
+      when: inventory_hostname == NODE_3_IP_ADDR_PRIV
