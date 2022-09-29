@@ -122,7 +122,7 @@ output "aws_availability_zones" {
 
 # Reference aws_ami in an output
 output "aws_ami_name_search" {
-  value = data.aws_ami.rhel_8.image_id
+  value = data.aws_ami.rhel_8.id
 }
 
 
