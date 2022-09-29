@@ -40,10 +40,10 @@
       debug:
         var: hostvars
 
-- name: Change the EC2 instance hostnames
-  hostname:
-    name: test
-    use: systemd
+    - name: Change the EC2 instance hostnames
+      hostname:
+        name: test
+        use: systemd
 
 - name: Set up Docker Repository
   hosts: EC2_West
