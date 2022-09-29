@@ -163,16 +163,16 @@
       hostname:
         name: node1
         use: systemd
-      when: inventory_hostname == NODE_1_IP_ADDR_PRIV
+      when: inventory_hostname == "NODE_1_IP_ADDR_PRIV"
 
     - name: Change the EC2 instance hostname for Node 2
       hostname:
         name: node2
         use: systemd
-      when: inventory_hostname == NODE_2_IP_ADDR_PRIV
+      when: inventory_hostname == "NODE_2_IP_ADDR_PRIV"
 
     - name: Change the EC2 instance hostname for Node 3
       hostname:
         name: node3
         use: systemd
-      when: inventory_hostname == NODE_3_IP_ADDR_PRIV
+      when: inventory_hostname == "NODE_3_IP_ADDR_PRIV"
