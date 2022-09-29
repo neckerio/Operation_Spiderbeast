@@ -149,7 +149,7 @@
         - "/home/ec2-user/.vim/undodir"
         - "/home/ec2-user/.vim/backupdir"
 
-    - name: Add other members of group to /etc/hosts (NOTE - switch to private vpc addresses?)
+    - name: Add other members of group to /etc/hosts
       lineinfile:
         line: "{{ item }}"
         path: /etc/hosts
@@ -176,4 +176,19 @@
           replace: "node2"
         - regexp: "{{ NODE_3_IP_ADDR }}"
           replace: "node3"
+
+    - name: Change the EC2 instance hostnames - Part 3 (no reboot)
+      shell:
+        cmd: "grep node /etc/hostname | xargs sudo hostname"
+      register: janky
+
+    - name: debbuging janky, preemptively
+      debug:
+        var: janky
+
+    - name: Change the EC2 instance hostnames - Part 4
+      service:
+        name: NetworkManager
+        state: restarted
+
 
