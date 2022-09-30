@@ -15,17 +15,23 @@
       debug:
         msg: "Node 3's IP address is: {{ NODE_3_IP_ADDR }}"
 
-    - name: Use ENV VARS to add hosts to inventory
+    - name: Use ENV VARS to add hosts to inventory group EC2_WEST and individual node groups
       add_host:
         groups: "{{ item.groups }}"
         name: "{{ item.name }}"
       loop:
-        - groups: EC2_West
-          name: "{{ NODE_1_IP_ADDR }}"
-        - groups: EC2_West
-          name: "{{ NODE_2_IP_ADDR }}"
-        - groups: EC2_West
-          name: "{{ NODE_3_IP_ADDR }}"
+        - name: "{{ NODE_1_IP_ADDR }}"
+          groups:
+          - EC2_West
+          - Node1
+        - name: "{{ NODE_2_IP_ADDR }}"
+          groups:
+          - EC2_West
+          - Node2
+        - name: "{{ NODE_3_IP_ADDR }}"
+          groups:
+          - EC2_West
+          - Node3
 
 - name: Test if hosts are responsive
   hosts: EC2_West
@@ -199,17 +205,17 @@
       community.docker.docker_swarm:
         state: present
 
-    - name: debug hostvars
-      debug:
-        var: hostvars
-
     - name: Retrieve Swarm info
       community.docker.docker_swarm_info:
       register: swarm
 
     - name: debug swarm
       debug:
-        var: swarm.Jointokens.Worker
+        var: swarm
+
+    - name: debug swarm
+      debug:
+        var: swarm.swarm_facts.Jointokens.Worker
 
     # - name: Join Node 1 swarm
     #   community.docker.docker_swarm:
