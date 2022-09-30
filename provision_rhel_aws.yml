@@ -209,4 +209,9 @@
 
     - name: debug swarm
       debug:
-        var: swarm
+        var: swarm.Jointokens.Worker
+
+    # - name: Join Node 1 swarm
+    #   community.docker.docker_swarm:
+    #     state: join
+    #     join_token: swarm.Jointokens.Worker
