@@ -201,9 +201,10 @@
 - name: Create Docker Swarm cluster
   hosts: EC2_West
   tasks:
-    - name: Docker Swarm Init
+    - name: Docker Swarm Init on Node 1
       community.docker.docker_swarm:
         state: present
+      when: ansible_hostname == "node1"
 
     - name: Retrieve Swarm info
       community.docker.docker_swarm_info:
@@ -214,24 +215,12 @@
         msg: "Condition for NODE1!"
       when: ansible_hostname == "node1"
 
-    - name: debug swarm.swarm_facts from docs
-      debug:
-        var: swarm.swarm_facts
-    - name: debug swarm.swarm_facts.CreatedAt
-      debug:
-        var: swarm.swarmfacts.CreatedAT
-    - name: debug swarm.swarm_facts.ID
-      debug:
-        var: swarm.swarmfacts.ID
-    - name: debug swarm.swarm_facts.JoinTokens
-      debug:
-        var: swarm.swarmfacts.JoinTokens
-    - name: debug swarm.swarm_facts.JoinTokens
+    - name: debug swarm_facts
       debug:
         var: swarm.swarm_facts.JoinTokens.Worker
 
-
-    # - name: Join Node 1 swarm
-    #   community.docker.docker_swarm:
-    #     state: join
-    #     join_token: swarm.Jointokens.Worker
+    - name: Join Node 1 swarm
+      community.docker.docker_swarm:
+        state: join
+        join_token: swarm.swarm_facts.JoinTokens.Worker
+      when: ansible_hostname != "node1"
