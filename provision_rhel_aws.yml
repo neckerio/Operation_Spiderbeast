@@ -209,13 +209,23 @@
       community.docker.docker_swarm_info:
       register: swarm
 
+    - name: debug hostvars to check group inventory status parsing
+      debug:
+        var: hostvars
+
     - name: debug swarm
       debug:
         var: swarm
 
-    - name: debug swarm
+    - name: debug swarm dot from swarm_facts
       debug:
-        var: swarm.swarm_facts.Jointokens.Worker
+        var: swarm_facts.Jointokens.Worker
+    - name: debug swarm brackets from swarm
+      debug:
+        var: swarm['swarm_facts']['Jointokens']['Worker']
+    - name: debug swarm brackets from swarm_facts
+      debug:
+        var: swarm_facts['Jointokens']['Worker']
 
     # - name: Join Node 1 swarm
     #   community.docker.docker_swarm:
