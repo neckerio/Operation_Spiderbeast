@@ -187,11 +187,6 @@
         name: NetworkManager
         state: restarted
 
-    - name: install Docker SDK for python, necessary for docker/ansible
-      pip:
-        name: docker
-        state: present
-
 - name: Create Docker Swarm cluster
   hosts: EC2_West
   tasks:
