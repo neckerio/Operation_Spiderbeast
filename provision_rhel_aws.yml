@@ -58,6 +58,7 @@
           - vim
           - bash-completion
           - git
+          - python3
 
     - name: Add Repository to Yum repositories
       yum_repository:
@@ -70,10 +71,10 @@
         gpgkey: "https://download.docker.com/linux/centos/gpg"
         state: present
 
-- name: Install the latest version of Docker Engine, Containerd and Docker Compose
+- name: Install Docker Engine, Containerd, Docker Compose and Python3 Docker SDK
   hosts: EC2_West
   tasks:
-    - name: Dnf install
+    - name: Dnf install Docker detritus 
       dnf:
         state: present
         name:
@@ -81,6 +82,10 @@
           - docker-ce-cli
           - containerd.io
           - docker-compose-plugin
+
+    - name: Pip3 install Docker detritus
+      pip:
+        name: docker
 
 - name: Linux postinstall instructions
   hosts: EC2_West
