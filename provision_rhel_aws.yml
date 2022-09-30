@@ -210,17 +210,9 @@
       community.docker.docker_swarm_info:
       register: swarm
 
-    - name: debug msg based on inventory condition
-      debug:
-        msg: "Condition for NODE1!"
-      when: ansible_hostname == "node1"
-
-    - name: debug swarm_facts
-      debug:
-        var: swarm.swarm_facts.JoinTokens.Worker
-
     - name: Join Node 1 swarm
       community.docker.docker_swarm:
         state: join
         join_token: swarm.swarm_facts.JoinTokens.Worker
+        remote_addrs: "{{ NODE_1_IP_ADDR_PRIV }}"
       when: ansible_hostname != "node1"
