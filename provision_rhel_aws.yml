@@ -209,27 +209,26 @@
       community.docker.docker_swarm_info:
       register: swarm
 
-    - name: debug hostvars to check group inventory status parsing
-      debug:
-        var: hostvars
     - name: debug msg based on inventory condition
       debug:
         msg: "Condition for NODE1!"
       when: ansible_hostname == "node1"
-    - name: debug msg based on inventory condition
-      debug:
-        msg: "is a number"
-      when: inventory_hostname is number
 
-    - name: debug docker swarm active - doc example. dot notation
-      debug:
-        var: swarm.docker_swarm_active
     - name: debug swarm.swarmfacts from docs
       debug:
         var: swarm.swarm_facts
-    - name: debug swarm
+    - name: debug swarm.swarmfacts.CreatedAt
       debug:
-        var: swarm
+        var: swarm.swarmfacts.CreatedAT
+    - name: debug swarm.swarmfacts.ID
+      debug:
+        var: swarm.swarmfacts.ID
+    - name: debug swarm.swarmfacts.JoinTokens
+      debug:
+        var: swarm.swarmfacts.JoinTokens
+    - name: debug swarm.swarmfacts.JoinTokens
+      debug:
+        var: swarm.swarmfacts.JoinTokens.Worker
 
 
     # - name: Join Node 1 swarm
