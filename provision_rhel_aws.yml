@@ -197,7 +197,6 @@
   tasks:
     - name: Docker Swarm Init
       community.docker.docker_swarm:
-        name: EC2_West
         state: present
 
     - name: debug hostvars
