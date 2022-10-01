@@ -217,7 +217,7 @@
 
     - name: debug addr 
       debug:
-        var: 
+        var: "{{ item }}"
       loop:
         - NODE_1_IP_ADDR
         - NODE_2_IP_ADDR
@@ -225,7 +225,7 @@
 
     - name: debug addr priv
       debug:
-        var: 
+        var: "{{ item }}"
       loop:
         - "{{ NODE_1_IP_ADDR_PRIV }}"
         - "{{ NODE_2_IP_ADDR_PRIV }}"
@@ -234,7 +234,7 @@
 
     - name: debug addr priv messag
       debug:
-        msg: 
+        msg: "{{ item }}"
       loop:
         - "{{ NODE_1_IP_ADDR_PRIV }}"
         - "{{ NODE_2_IP_ADDR_PRIV }}"
