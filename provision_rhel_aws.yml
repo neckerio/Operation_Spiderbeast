@@ -215,9 +215,30 @@
       debug:
         var: swarm.swarm_facts.JoinTokens.Worker
 
-    - name: debug addr port
+    - name: debug addr 
       debug:
-        var: "{{ NODE_1_IP_ADDR_PRIV }}"
+        var: 
+      loop:
+        - NODE_1_IP_ADDR
+        - NODE_2_IP_ADDR
+        - NODE_3_IP_ADDR
+
+    - name: debug addr priv
+      debug:
+        var: 
+      loop:
+        - "{{ NODE_1_IP_ADDR_PRIV }}"
+        - "{{ NODE_2_IP_ADDR_PRIV }}"
+        - "{{ NODE_3_IP_ADDR_PRIV }}"
+
+
+    - name: debug addr priv messag
+      debug:
+        msg: 
+      loop:
+        - "{{ NODE_1_IP_ADDR_PRIV }}"
+        - "{{ NODE_2_IP_ADDR_PRIV }}"
+        - "{{ NODE_3_IP_ADDR_PRIV }}"
 
     - name: Join Node 1 swarm
       community.docker.docker_swarm:
