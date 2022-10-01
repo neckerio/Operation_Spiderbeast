@@ -211,6 +211,10 @@
       register: swarm
       when: ansible_hostname == "node1"
 
+    - name: debug join token
+      debug:
+        var: swarm.swarm_facts.JoinTokens.Worker
+
     - name: Join Node 1 swarm
       community.docker.docker_swarm:
         state: join
