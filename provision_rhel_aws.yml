@@ -217,11 +217,11 @@
 
     - name: debug addr port
       debug:
-        var: "NODE_1_IP_ADDR_PRIV:2377"
+        var: "{{ NODE_1_IP_ADDR_PRIV }}"
 
     - name: Join Node 1 swarm
       community.docker.docker_swarm:
         state: join
         join_token: swarm.swarm_facts.JoinTokens.Worker
-        remote_addrs: "{{ NODE_1_IP_ADDR_PRIV }}:2377"
+        remote_addrs: "{{ NODE_1_IP_ADDR_PRIV }}"
       when: ansible_hostname != "node1"
