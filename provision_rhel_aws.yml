@@ -211,26 +211,24 @@
       register: swarm
       when: ansible_hostname == "node1"
 
-    - name: debug hostvars to view how the register swarm is parsed
+    - name: debug hostvars to try to reach into specific inventory_hostname and get var
       debug:
-        var: hostvars.groups.Node1.swarm.swarm_facts.JoinTokens.Worker
-      when: ansible_hostname == "node1"
+        var: hostvars[inventory_hostname]['ansible_default_ipv4']
 
-    - name: debug hostvars to view how the register swarm is parsed
+    - name: debug hostvars to try to reach into Node1
       debug:
-        var: groups.Node1.swarm.swarm_facts.JoinTokens.Worker
-      when: ansible_hostname == "node1"
+        var: hostvars[Node1].swarm.swarm_facts.JoinTokens.Worker
 
-    - name: set swarm register to a local fact on all nodes
-      set_fact:
-        swarm_join_worker_token: "{{ hostvars.groups.Node1.swarm.swarm_facts.JoinTokens.Worker }}"
+    # - name: set swarm register to a local fact on all nodes
+    #   set_fact:
+    #     swarm_join_worker_token: "{{ Node1.swarm.swarm_facts.JoinTokens.Worker }}"
 
-    - name: gather newly set fact
-      gather_facts:
+    # - name: gather newly set fact
+    #   gather_facts:
 
-    - name: Join Node 1 swarm
-      community.docker.docker_swarm:
-        state: join
-        join_token: "{{ swarm_join_worker_token }}"
-        remote_addrs: "{{ NODE_1_IP_ADDR_PRIV }}"
-      when: ansible_hostname != "node1"
+    # - name: Join Node 1 swarm
+    #   community.docker.docker_swarm:
+    #     state: join
+    #     join_token: "{{ swarm_join_worker_token }}"
+    #     remote_addrs: "{{ NODE_1_IP_ADDR_PRIV }}"
+    #   when: ansible_hostname != "node1"
