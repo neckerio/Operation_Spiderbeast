@@ -235,6 +235,10 @@
           - python3-jsonpatch
           - python3-pyyaml
 
+    - name: Pip install module requirements
+      pip:
+        name: jsondiff
+
 - name: Test Stack functionality
   hosts: EC2_West
   tasks:
