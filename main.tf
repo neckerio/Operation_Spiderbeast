@@ -73,9 +73,9 @@ resource "aws_security_group" "ping" {
   description = "ICMP for Ping Access"
   ingress {
     description = "Allow ICMP Traffic"
-    from_port   = 2377
-    to_port     = 2377
-    protocol    = "tcp"
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
     cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
@@ -94,9 +94,9 @@ resource "aws_security_group" "swarm" {
   description = "Open up port for Docker Swarm"
   ingress {
     description = "Open up port for Docker Swarm"
-    from_port   = -1
-    to_port     = -1
-    protocol    = "icmp"
+    from_port   = 2377
+    to_port     = 2377
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
@@ -116,9 +116,9 @@ resource "aws_security_group" "web_insec" {
   description = "Open up port for insecure website"
   ingress {
     description = "Open up port for insecure website"
-    from_port   = -1
-    to_port     = -1
-    protocol    = "icmp"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
