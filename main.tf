@@ -107,7 +107,28 @@ resource "aws_security_group" "swarm" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+	
 
+# Create web_insec security group
+resource "aws_security_group" "web_insec" {
+  name        = "web_insec"
+  vpc_id      = aws_vpc.main.id
+  description = "Open up port for insecure website"
+  ingress {
+    description = "Open up port for insecure website"
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    description = "Allow all ip and ports outbound"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
 
 # Create route table associations
 resource "aws_route_table_association" "public" {
