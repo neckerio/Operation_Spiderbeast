@@ -217,7 +217,7 @@
 
     - name: debug addr port
       debug:
-        var: "{{ NODE_1_ADDR_PRIV }}:2377"
+        var: "{{ NODE_1_IP_ADDR_PRIV }}:2377"
 
     - name: Join Node 1 swarm
       community.docker.docker_swarm:
