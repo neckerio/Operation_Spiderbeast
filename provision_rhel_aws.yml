@@ -213,11 +213,11 @@
 
     - name: debug hostvars to try to reach into specific inventory_hostname and get var
       debug:
-        var: hostvars[inventory_hostname]['ansible_default_ipv4']
+        var: hostvars[groups['Node1']]
 
     - name: debug hostvars to try to reach into Node1
       debug:
-        var: hostvars[Node1].swarm.swarm_facts.JoinTokens.Worker
+        var: hostvars[groups['Node1']].swarm
 
     # - name: set swarm register to a local fact on all nodes
     #   set_fact:
