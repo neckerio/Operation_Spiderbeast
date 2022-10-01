@@ -73,6 +73,27 @@ resource "aws_security_group" "ping" {
   description = "ICMP for Ping Access"
   ingress {
     description = "Allow ICMP Traffic"
+    from_port   = 2377
+    to_port     = 2377
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    description = "Allow all ip and ports outbound"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+# Create Docker Swarm security group
+resource "aws_security_group" "swarm" {
+  name        = "swarm"
+  vpc_id      = aws_vpc.main.id
+  description = "Open up port for Docker Swarm"
+  ingress {
+    description = "Open up port for Docker Swarm"
     from_port   = -1
     to_port     = -1
     protocol    = "icmp"
