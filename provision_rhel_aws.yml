@@ -211,10 +211,6 @@
       register: swarm
       when: ansible_hostname == "node1"
 
-    - name: debug hostvars to try to reach into Node1
-      debug:
-        var: hostvars[groups['Node1'][0]].swarm.swarm_facts.JoinTokens.Worker
-
     - name: set swarm register to a local fact on all nodes
       set_fact:
         swarm_join_worker_token: "{{ hostvars[groups['Node1'][0]].swarm.swarm_facts.JoinTokens.Worker }}"
@@ -228,3 +224,26 @@
         join_token: "{{ swarm_join_worker_token }}"
         remote_addrs: "{{ NODE_1_IP_ADDR_PRIV }}"
       when: ansible_hostname != "node1"
+
+- name: Get Compose/Stack basic functionality
+  hosts: EC2_West
+  tasks:
+    - name: Download stack module requirements
+      dnf:
+        state: latest
+        name:
+          - python3-jsonpatch
+          - python3-pyyaml
+
+- name: Test Stack functionality
+  hosts: EC2_West
+  tasks:
+    - name: Docker Stack test
+      community.docker.docker_stack:
+        state: present
+        name: voteapp
+        compose:
+	  - version: '3'
+	    services:
+	      web:
+		image: nginx:latest
