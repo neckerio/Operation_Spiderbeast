@@ -240,7 +240,7 @@
         name: jsondiff
 
 - name: Test Stack functionality
-  hosts: EC2_West
+  hosts: Node1
   tasks:
     - name: Docker Stack test
       community.docker.docker_stack:
