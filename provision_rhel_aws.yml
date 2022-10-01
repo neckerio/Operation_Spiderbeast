@@ -213,29 +213,20 @@
 
     - name: debug hostvars to view how the register swarm is parsed
       debug:
-        var: hostvars
+        var: hostvars.groups.Node1.swarm.swarm_facts.JoinTokens.Worker
       when: ansible_hostname == "node1"
 
-    - name: debug groups to view how the register swarm is parsed
+    - name: debug hostvars to view how the register swarm is parsed
       debug:
-        var: groups
+        var: groups.Node1.swarm.swarm_facts.JoinTokens.Worker
       when: ansible_hostname == "node1"
 
     - name: set swarm register to a local fact on all nodes
       set_fact:
-        swarm_join_worker_token: "{{ groups.node1.swarm.swarm_facts.JoinTokens.Worker }}"
+        swarm_join_worker_token: "{{ hostvars.groups.Node1.swarm.swarm_facts.JoinTokens.Worker }}"
 
     - name: gather newly set fact
       gather_facts:
-
-    - name: debug join token
-      debug:
-        var: groups.node1.swarm.swarm_facts.JoinTokens.Worker
-
-    - name: debug join fact
-      debug:
-        var: swarm_join_worker_token
-
 
     - name: Join Node 1 swarm
       community.docker.docker_swarm:
