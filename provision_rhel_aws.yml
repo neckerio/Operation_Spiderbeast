@@ -209,6 +209,7 @@
     - name: Retrieve Swarm info
       community.docker.docker_swarm_info:
       register: swarm
+      when: ansible_hostname == "node1"
 
     - name: Join Node 1 swarm
       community.docker.docker_swarm:
