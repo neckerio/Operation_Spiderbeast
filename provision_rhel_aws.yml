@@ -251,7 +251,5 @@
             services:
               web:
                 image: nginx:latest
-                networks: 
-                  - bridge
                 ports:
                   - "80:80"
