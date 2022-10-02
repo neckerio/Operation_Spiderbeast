@@ -110,14 +110,21 @@ resource "aws_security_group" "swarm" {
 	
 
 # Create web_insec security group
-resource "aws_security_group" "web_insec" {
-  name        = "web_insec"
+resource "aws_security_group" "web" {
+  name        = "web"
   vpc_id      = aws_vpc.main.id
-  description = "Open up port for insecure website"
+  description = "Open up port for a webserver"
   ingress {
-    description = "Open up port for insecure website"
+    description = "Open up port for insecure webserver"
     from_port   = 80
     to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    description = "Open up port for secure webserver"
+    from_port   = 443
+    to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
