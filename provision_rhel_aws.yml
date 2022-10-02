@@ -254,6 +254,4 @@
                 networks: 
                   - bridge
                 ports:
-                  - 80:80
-            networks:
-              bridge:
+                  - "80:80"
