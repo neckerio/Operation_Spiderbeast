@@ -65,6 +65,7 @@
           - bash-completion
           - git
           - python3
+          - java-17
 
     - name: Add Repository to Yum repositories
       yum_repository:
